@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7pkuveif3qsi"]
+
+[ext_resource type="Texture2D" uid="uid://cawyoacydw708" path="res://icon.svg" id="1_pf04f"]
+[ext_resource type="Texture2D" uid="uid://dvmaw0cy2iflq" path="res://scope_crosshair.svg" id="2_inuyp"]
+[ext_resource type="Script" path="res://scope_sway_2d.gd" id="3_n1ova"]
+
+[node name="scope_demo_2d" type="Node"]
+
+[node name="godot" type="Sprite2D" parent="."]
+position = Vector2(671, 362)
+texture = ExtResource("1_pf04f")
+
+[node name="godot2" type="Sprite2D" parent="."]
+position = Vector2(778, 810)
+texture = ExtResource("1_pf04f")
+
+[node name="godot3" type="Sprite2D" parent="."]
+position = Vector2(1191, 449)
+texture = ExtResource("1_pf04f")
+
+[node name="godot4" type="Sprite2D" parent="."]
+position = Vector2(1614, 845)
+texture = ExtResource("1_pf04f")
+
+[node name="godot5" type="Sprite2D" parent="."]
+position = Vector2(1698, 268)
+texture = ExtResource("1_pf04f")
+
+[node name="godot6" type="Sprite2D" parent="."]
+position = Vector2(267, 555)
+texture = ExtResource("1_pf04f")
+
+[node name="hud" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="scope_pivot" type="Control" parent="hud"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="scope_crosshair" type="Sprite2D" parent="hud/scope_pivot"]
+texture = ExtResource("2_inuyp")
+script = ExtResource("3_n1ova")

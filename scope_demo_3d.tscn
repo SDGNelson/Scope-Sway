@@ -1,0 +1,105 @@
+[gd_scene load_steps=14 format=3 uid="uid://c7p4r2k8ifdkn"]
+
+[ext_resource type="Script" path="res://scope_sway_3d.gd" id="1_vf4yx"]
+[ext_resource type="Texture2D" uid="uid://cawyoacydw708" path="res://icon.svg" id="2_sgqm3"]
+[ext_resource type="Texture2D" uid="uid://dvmaw0cy2iflq" path="res://scope_crosshair.svg" id="3_4hhtc"]
+[ext_resource type="Script" path="res://projected_crosshair_2d.gd" id="4_0a7ou"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_p1frk"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_oj8t7"]
+sky_material = SubResource("ProceduralSkyMaterial_p1frk")
+
+[sub_resource type="Environment" id="Environment_3qe3p"]
+background_mode = 2
+sky = SubResource("Sky_oj8t7")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_j25og"]
+radius = 0.05
+height = 0.5
+radial_segments = 16
+rings = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_111g8"]
+albedo_color = Color(0.083392, 0.083392, 0.083392, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_syf6g"]
+radius = 0.1
+height = 0.2
+radial_segments = 8
+rings = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xljho"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_6nmj3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lxd66"]
+albedo_texture = ExtResource("2_sgqm3")
+
+[node name="scope_demo_3d" type="Node"]
+
+[node name="world_environment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3qe3p")
+
+[node name="sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.184902, -0.684727, 0.704955, 0.849243, 0.249663, 0.465246, -0.494567, 0.684703, 0.535336, 0, 0, 0)
+shadow_enabled = true
+
+[node name="camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.71297)
+current = true
+
+[node name="scope_sway" type="Node3D" parent="camera"]
+script = ExtResource("1_vf4yx")
+
+[node name="weapon_mesh" type="MeshInstance3D" parent="camera/scope_sway"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.167903, -0.109648, -0.149255)
+mesh = SubResource("CapsuleMesh_j25og")
+surface_material_override/0 = SubResource("StandardMaterial3D_111g8")
+
+[node name="laser_dot_mesh" type="MeshInstance3D" parent="camera/scope_sway"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.13996)
+cast_shadow = 0
+mesh = SubResource("SphereMesh_syf6g")
+surface_material_override/0 = SubResource("StandardMaterial3D_xljho")
+
+[node name="godot" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2265, 0.733747, -5.37824)
+mesh = SubResource("QuadMesh_6nmj3")
+surface_material_override/0 = SubResource("StandardMaterial3D_lxd66")
+
+[node name="godot2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.27252, 1.62751, -6.1451)
+mesh = SubResource("QuadMesh_6nmj3")
+surface_material_override/0 = SubResource("StandardMaterial3D_lxd66")
+
+[node name="godot3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23221, -1.04977, -4.15742)
+mesh = SubResource("QuadMesh_6nmj3")
+surface_material_override/0 = SubResource("StandardMaterial3D_lxd66")
+
+[node name="godot4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.82801, -1.88837, -9.25692)
+mesh = SubResource("QuadMesh_6nmj3")
+surface_material_override/0 = SubResource("StandardMaterial3D_lxd66")
+
+[node name="hud" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="scope_crosshair" type="Sprite2D" parent="hud" node_paths=PackedStringArray("camera", "aim_node")]
+position = Vector2(556, 304)
+texture = ExtResource("3_4hhtc")
+script = ExtResource("4_0a7ou")
+camera = NodePath("../../camera")
+aim_node = NodePath("../../camera/scope_sway")
